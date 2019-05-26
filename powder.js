@@ -49,13 +49,15 @@ function createInvoice (product) {
 
 
 // Show offer
-app.hears(/^заказать.*/i, ({ replyWithMarkdown }) => replyWithMarkdown(`
-
-${products.reduce((acc, p) => {
-    return (acc += `*${p.name}* - ${p.price} ₽\n`)
-    }, '')}    
-`,
-    Markup.keyboard(products.map(p => p.name)).oneTime().resize().extra()
+app.hears(/^заказать.*/i, ({ replyWithMarkdown }) => replyWithMarkdown(
+    products
+        .map((p) => `*${p.name}* - ${p.price} ₽`)
+        .join('\n'),
+    Markup
+        .keyboard(products.map(p => p.name))
+        .oneTime()
+        .resize()
+        .extra()
 ))
 
 // Order product
